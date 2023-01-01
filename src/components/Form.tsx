@@ -12,6 +12,9 @@ const Form = ({ setSearchedCity }: Props) => {
   const clickButton = () => {
     setSearchedCity(input);
   };
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') clickButton();
+  };
   return (
     <div className="sm:flex sm:justify-center sm:flex-col sm:items-center sm:gap-1">
       <Input
@@ -22,6 +25,7 @@ const Form = ({ setSearchedCity }: Props) => {
         maxLength={25}
         title="SHOULD CONTAIN ONLY LETTERS"
         value={input}
+        onKeyDown={handleKeyDown}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setInput(e.target.value);
         }}

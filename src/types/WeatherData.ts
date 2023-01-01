@@ -4,8 +4,10 @@ export const enum WeatherType {
   Clear = 'Clear',
   Clouds = 'Clouds',
   Rain = 'Rain',
+  Drizzle = 'Drizzle',
   Thunderstorm = 'Thunderstorm',
   Mist = 'Mist',
+  Fog = 'Fog',
   Snow = 'Snow',
 }
 

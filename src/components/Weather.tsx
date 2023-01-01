@@ -1,38 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import UndefinedRequest from './UndefinedRequest';
 import WeatherRequest from './WeatherRequest';
-
+import { useGetGeodataQuery } from '../store/geodataAPI';
+import { setLoadStatus } from '../store/loadingSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { ELoading } from '../types/WeatherData';
 type Props = {
   searchedCity: string;
 };
 
 const Weather = ({ searchedCity }: Props) => {
-  const API_GEODATA = `http://api.openweathermap.org/geo/1.0/direct?q=${searchedCity}&limit=1&appid=4eb5a203233a2f2be4a5629792991f75`;
-  const [coord, setCoord] = useState({ lat: '', lon: '' });
-  const [undefinedStatus, setUndefinedStatus] = useState(false);
-  useEffect(() => {
-    if (searchedCity.length) {
-      axios
-        .get(API_GEODATA)
-        .then((response) => {
-          const data = response.data[0];
-          if (data === undefined) {
-            setUndefinedStatus(true);
-          }
-          if (data !== undefined) {
-            setUndefinedStatus(false);
-            setCoord({ lat: data.lat.toFixed(2), lon: data.lon.toFixed(2) });
-          }
-        })
-        .catch((error) => console.error(error));
+  const dispatch = useAppDispatch();
+  const load = useAppSelector((state) => state.load.loadStatus);
+  const { data, isSuccess, error } = useGetGeodataQuery(searchedCity, {
+    skip: !searchedCity,
+  });
+
+  React.useEffect(() => {
+    if (data !== undefined) {
+      dispatch(setLoadStatus(ELoading.Loading));
     }
-  }, [API_GEODATA, searchedCity]);
+  }, [data, isSuccess]);
 
   return (
     <>
-      {undefinedStatus === false ? (
-        <WeatherRequest searchedCity={searchedCity} coord={coord} />
+      {error}
+      {data !== undefined ? (
+        <WeatherRequest coord={data} />
+      ) : load === ELoading.First ? (
+        <></>
       ) : (
         <UndefinedRequest />
       )}

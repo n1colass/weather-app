@@ -8,7 +8,7 @@ import {
 } from 'react-icons/bs';
 import { IoThunderstorm } from 'react-icons/io5';
 
-export const getWeather = (type: WeatherType) => {
+export const getWeatherImage = (type: WeatherType) => {
   let iconWeather: React.ReactElement;
   switch (type) {
     case WeatherType.Clear:
@@ -20,10 +20,16 @@ export const getWeather = (type: WeatherType) => {
     case WeatherType.Rain:
       iconWeather = <BsFillCloudRainHeavyFill style={{ color: '#1F618D' }} />;
       break;
+    case WeatherType.Drizzle:
+      iconWeather = <BsFillCloudRainHeavyFill style={{ color: '#85C1E9' }} />;
+      break;
     case WeatherType.Thunderstorm:
       iconWeather = <IoThunderstorm style={{ color: '#6C3483' }} />;
       break;
     case WeatherType.Mist:
+      iconWeather = <WiFog style={{ color: '#7F8C8D' }} />;
+      break;
+    case WeatherType.Fog:
       iconWeather = <WiFog style={{ color: '#7F8C8D' }} />;
       break;
     case WeatherType.Snow:

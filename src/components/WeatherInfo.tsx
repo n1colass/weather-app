@@ -22,7 +22,7 @@ const WeatherInfo = ({ weather }: Props) => {
         </p>
       </section>
       <section className="flex flex-col w-3/5 h-full sm:w-1/2">
-        <p className="mx-auto mt-12 text-7xl text-slate-700 before:sm:text-6xl sm:mt-16">
+        <p className="mx-auto mt-12 text-7xl text-slate-700 sm:text-6xl sm:mt-12">
           {weather?.temperature.now}
           <sup>°C</sup>
         </p>
